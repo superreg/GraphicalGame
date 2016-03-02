@@ -22,6 +22,15 @@ int main(int argc, char** argv){
     topRightBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
     gtk_box_pack_start(topBox, topLeftBox, TRUE, TRUE, 2);
     gtk_box_pack_start(topBox, topRightBox, TRUE, TRUE, 2);
+    g_signal_connect (G_OBJECT(window), "destroy", G_CALLBACK (gtk_main_quit), NULL);
+    gtk_widget_show(window);
+    gtk_widget_show(mainBox);
+    gtk_widget_show(topBox);
+    gtk_widget_show(bottomBox);
+    gtk_widget_show(bottomLeftBox);
+    gtk_widget_show(bottomRightBox);
+    gtk_widget_show(topRightBox);
+    gtk_widget_show(topLeftBox);
     gtk_main();
     return 0;
 }
