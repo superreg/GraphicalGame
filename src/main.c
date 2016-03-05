@@ -39,13 +39,15 @@ int main(int argc, char** argv){
     //pack checkersGrid into checkersRows
     for(i = 0; i < 8; i++){
         for(j = 0; j < 8; j++){
-            gtk_box_pack_start(&(checkersRows[i]), &(checkersGrid[i][j]), TRUE, TRUE, 0);
+            gtk_box_pack_start(checkersRows[i], checkersGrid[i][j], TRUE, TRUE, 0);
         }
     }
     //pack checkersRows into topLeftBox
     for(i = 0; i < 8; i++){
-        gtk_box_pack_start(topRightBox, &(checkersRows[i]), TRUE, TRUE, 0);
+        gtk_box_pack_start(topRightBox, checkersRows[i], TRUE, TRUE, 0);
     }
+    //make it close when closed
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_widget_show(window);
     gtk_main();
     return 0;
