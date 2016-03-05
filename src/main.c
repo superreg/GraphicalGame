@@ -3,11 +3,15 @@
 
 int main(int argc, char** argv){
     GtkWindow *window;
-    GtkWidget *mainBox, *topBox, *bottomBox, *bottomLeftBox, *bottomRightBox, *topRightBox, *topLeftBox;
+    GtkBox *mainBox, *topBox, *bottomBox, *topRightBox, *topLeftBox, checkersRows[8];
+    GtkEventBox *bottomLeftBox, *bottomRightBox;
+    GtkEventBox checkersGrid[8][8];
+    int i, j;
+    //initializing and packing
     gtk_init(&argc, &argv);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(window, "Checkers");
-    gtk_window_set_default_size(window, 1024, 768);
+    gtk_window_set_default_size(window, 640, 640);
     mainBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
     gtk_container_add(window, mainBox);
     topBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
@@ -18,19 +22,35 @@ int main(int argc, char** argv){
     bottomRightBox = gtk_event_box_new();
     gtk_box_pack_start(bottomBox, bottomLeftBox, TRUE, TRUE, 0);
     gtk_box_pack_start(bottomBox, bottomRightBox, TRUE, TRUE, 0);
-    topLeftBox = gtk_event_box_new();
+    topLeftBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
     topRightBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
     gtk_box_pack_start(topBox, topLeftBox, TRUE, TRUE, 2);
     gtk_box_pack_start(topBox, topRightBox, TRUE, TRUE, 2);
-    g_signal_connect (G_OBJECT(window), "destroy", G_CALLBACK (gtk_main_quit), NULL);
+    //initialize checkers board
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            GtkEventBox *tmp;
+            tmp = gtk_event_box_new();
+            checkersGrid[i][j] = *tmp;
+        }
+    }
+    //initialize checkers rows
+    for(i = 0; i < 8; i++){
+        GtkBox *tmp;
+        tmp = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+        checkersRows[i] = *tmp;
+    }
+    //pack checkersGrid into checkersRows
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            gtk_box_pack_start(&(checkersRows[i]), &(checkersGrid[i][j]), TRUE, TRUE, 0);
+        }
+    }
+    //pack checkersRows into topLeftBox
+    for(i = 0; i < 8; i++){
+        gtk_box_pack_start(topRightBox, &(checkersRows[i]), TRUE, TRUE, 0);
+    }
     gtk_widget_show(window);
-    gtk_widget_show(mainBox);
-    gtk_widget_show(topBox);
-    gtk_widget_show(bottomBox);
-    gtk_widget_show(bottomLeftBox);
-    gtk_widget_show(bottomRightBox);
-    gtk_widget_show(topRightBox);
-    gtk_widget_show(topLeftBox);
     gtk_main();
     return 0;
 }
