@@ -3,9 +3,9 @@
 
 int main(int argc, char** argv){
     GtkWindow *window;
-    GtkBox *mainBox, *topBox, *bottomBox, *topRightBox, *topLeftBox, checkersRows[8];
+    GtkBox *mainBox, *topBox, *bottomBox, *topRightBox, *topLeftBox, *checkersRows[8];
     GtkEventBox *bottomLeftBox, *bottomRightBox;
-    GtkEventBox checkersGrid[8][8];
+    GtkEventBox *checkersGrid[8][8];
     int i, j;
     //initializing and packing
     gtk_init(&argc, &argv);
@@ -29,16 +29,12 @@ int main(int argc, char** argv){
     //initialize checkers board
     for(i = 0; i < 8; i++){
         for(j = 0; j < 8; j++){
-            GtkEventBox *tmp;
-            tmp = gtk_event_box_new();
-            checkersGrid[i][j] = *tmp;
+            checkersGrid[i][j] = gtk_event_box_new();
         }
     }
     //initialize checkers rows
     for(i = 0; i < 8; i++){
-        GtkBox *tmp;
-        tmp = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-        checkersRows[i] = *tmp;
+        checkersRows[i] = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
     }
     //pack checkersGrid into checkersRows
     for(i = 0; i < 8; i++){
