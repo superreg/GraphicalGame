@@ -51,6 +51,7 @@ int main(int argc, char** argv){
     g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
     //checkerboard
     css = g_file_new_for_path(cssPath);
+    cssProvider = gtk_css_provider_new();
     if(!gtk_css_provider_load_from_file(cssProvider, css, error))
         return 1;
     for(i = 0; i<8; i++){
